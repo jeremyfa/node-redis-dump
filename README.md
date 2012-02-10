@@ -25,7 +25,7 @@ Dump redis database into redis cli commands
 There are two distinct ways to use redis-dump: through the command line interface, or by requiring the redis-dump module in your own code.
 
 ### Using redis-dump from the command line
-You can use forever to run any kind of script continuously (whether it is written in node.js or not). The usage options are simple:
+The usage options are simple:
 
 ```
   $ redis-dump --help
