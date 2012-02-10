@@ -9,7 +9,7 @@ if argv.help
     console.log """
         #{package.name} #{package.version}
 
-        Usage: #{package.name} [OPTIONS]
+        Usage: redis-dump [OPTIONS]
           -h <hostname>    Server hostname (default: 127.0.0.1)
           -p <port>        Server port (default: 6379)
           -f <filter>      Query filter (default: *)

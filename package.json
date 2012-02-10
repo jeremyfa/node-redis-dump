@@ -1,7 +1,7 @@
 {
     "name": "redis-dump",
     "version": "0.1.0",
-    "description": "Redis dump library",
+    "description": "Dump redis database into redis cli commands",
     "author": "Jeremy Faivre <contact@jeremyfa.com>",
     "main": "./bin/index.js",
     "scripts": {
