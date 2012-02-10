@@ -58,6 +58,8 @@ Let's say we have created a brand new redis database and have got the data gener
   ZADD    mydb:sortednumberset 1000 one 2000 two 3000 three
   HMSET   mydb:article:4 title 'Hello World' id 4
   SET     mydb:numvisits 34
+  SET     mydb:volatile 'nothing important'
+  EXPIRE  mydb:volatile 3600
 ```
 
 If we call redis-dump, the output will look like this:
@@ -73,6 +75,9 @@ If we call redis-dump, the output will look like this:
   DEL     mydb:article:4
   HMSET   mydb:article:4 title 'Hello World' id 4
   SET     mydb:numvisits 34
+  DEL     mydb:volatile
+  SET     mydb:volatile 'nothing important'
+  EXPIRE  mydb:volatile 3600
 ```
 
 And with json output:
@@ -107,6 +112,11 @@ The json maps all the informations from redis database in a handy way for other 
     "mydb:numvisits": {
         "type": "string",
         "value": "34"
+    },
+    "mydb:volatile": {
+        "type": "string",
+        "value": "nothing important",
+        "ttl": 3466
     }
   }
 ```
@@ -124,6 +134,9 @@ You can also convert json back to redis commands.
   DEL     mydb:article:4
   HMSET   mydb:article:4 title 'Hello World' id 4
   SET     mydb:numvisits 34
+  DEL     mydb:volatile
+  SET     mydb:volatile 'nothing important'
+  EXPIRE  mydb:volatile 3466
 ```
 
 Then, import your data back to redis can be done in one line from either format:
