@@ -28,6 +28,7 @@ class RedisDumper
         keys = []
         types = []
         values = []
+        ttls = []
         
         run [
             # Get keys matching filter
@@ -60,10 +61,20 @@ class RedisDumper
                             multi.hgetall keys[i]
                 multi.exec next
             
-            # Render result as the requested format
+            # Get TTL of each key
             (replies, next) =>
                 for value in replies
                     values.push value
+
+                multi = @db.multi()
+                for key in keys
+                    multi.ttl key
+                multi.exec next
+            
+            # Render result as the requested format
+            (replies, next) =>
+                for ttl in replies
+                    ttls.push ttl
                 
                 # Create redis-cli compliant commands from key's type and data (default)
                 commands = []
@@ -85,7 +96,11 @@ class RedisDumper
                         when 'hash'
                             commands.push "DEL     #{@escape key}"
                             commands.push "HMSET   #{@escape key} #{((@escape(k)+' '+@escape(v)) for k, v of value).join(' ')}"
-
+                    
+                    ttl = parseInt ttls[i], 10
+                    if not isNaN(ttl) and ttl isnt -1
+                        commands.push "EXPIRE  #{@escape key} #{ttl}"
+                    
                 # Return result
                 callback null, commands.join("\n")
                     

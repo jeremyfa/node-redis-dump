@@ -38,12 +38,13 @@
     };
 
     RedisDumper.prototype.dump = function(_arg, callback) {
-      var filter, keys, types, values,
+      var filter, keys, ttls, types, values,
         _this = this;
       filter = _arg.filter;
       keys = [];
       types = [];
       values = [];
+      ttls = [];
       return run([
         function(next) {
           return _this.db.keys(filter, next);
@@ -81,10 +82,22 @@
           }
           return multi.exec(next);
         }, function(replies, next) {
-          var commands, i, item, j, k, key, type, v, value, _i, _len, _len2;
+          var key, multi, value, _i, _j, _len, _len2;
           for (_i = 0, _len = replies.length; _i < _len; _i++) {
             value = replies[_i];
             values.push(value);
+          }
+          multi = _this.db.multi();
+          for (_j = 0, _len2 = keys.length; _j < _len2; _j++) {
+            key = keys[_j];
+            multi.ttl(key);
+          }
+          return multi.exec(next);
+        }, function(replies, next) {
+          var commands, i, item, j, k, key, ttl, type, v, value, _i, _len, _len2;
+          for (_i = 0, _len = replies.length; _i < _len; _i++) {
+            ttl = replies[_i];
+            ttls.push(ttl);
           }
           commands = [];
           for (i = 0, _len2 = types.length; i < _len2; i++) {
@@ -142,6 +155,10 @@
                   }
                   return _results;
                 }).call(_this)).join(' ')));
+            }
+            ttl = parseInt(ttls[i], 10);
+            if (!isNaN(ttl) && ttl !== -1) {
+              commands.push("EXPIRE  " + (_this.escape(key)) + " " + ttl);
             }
           }
           return callback(null, commands.join("\n"));
