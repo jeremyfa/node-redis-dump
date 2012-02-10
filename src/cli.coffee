@@ -5,6 +5,7 @@ argv    = require('optimist').argv
 dump    = require './dump'
 package = JSON.parse fs.readFileSync path.normalize(__dirname+'/../package.json'), 'utf8'
 
+# Display help if requested
 if argv.help
     console.log """
         #{package.name} #{package.version}
@@ -13,12 +14,16 @@ if argv.help
           -h <hostname>    Server hostname (default: 127.0.0.1)
           -p <port>        Server port (default: 6379)
           -f <filter>      Query filter (default: *)
+          --convert        Convert from json to redis commands
           --help           Output this help and exit
+          --json           Output result as json
 
         Examples:
           redis-dump
           redis-dump -p 6500
           redis-dump -f 'mydb:*' > mydb.dump.txt
+          redis-dump --json > mydb.json
+          cat mydb.json | redis-dump --convert
 
         The output is a valid list of redis commands.
         That means the following will work:
@@ -31,8 +36,26 @@ else
         filter: argv.f ? '*'
         port:   argv.p ? 6379
         host:   argv.h ? '127.0.0.1'
+        format: if argv.json then 'json' else 'redis'
+
+    # Dump operation
+    doDump = ->
+        dump params, (err, result) ->
+            if err? then return process.stderr.write "#{err.message ? err}\n"
+            if result? and "#{result}".replace(/^\s+/, '').replace(/\s+$/, '') isnt ''
+                console.log result
+                process.exit 0
     
-    dump params, (err, result) ->
-        if err? then return process.stderr.write "#{err}\n"
-        if result? and "#{result}".replace(/^\s+/, '').replace(/\s+$/, '') isnt ''
-            console.log result
+    # If we are converting a stream from stdin, read it to the end
+    if argv.convert
+        params.convert = ''
+        process.stdin.resume()
+        process.stdin.on 'data', (chunk) ->
+            params.convert += "#{chunk}"
+        process.stdin.on 'end', ->
+            doDump()
+    # Otherwise just run dump directly
+    else
+        doDump()
+    
+    
