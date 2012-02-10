@@ -6,7 +6,7 @@ Dump redis database into redis cli commands
 
 ### Installing npm (node package manager)
 ``` bash
-  curl http://npmjs.org/install.sh | sh
+  $ curl http://npmjs.org/install.sh | sh
 ```
 
 ### Installing redis-dump
@@ -52,15 +52,13 @@ You can also use redis-dump from inside your own node.js code.
 ``` js
   var dump = require('redis-dump');
 
-  dump(
-  {
+  dump({
     // These are default values, you can omit them
     filter: '*',
     port: 6379,
     host: '127.0.0.1'
   },
-  function(err, result)
-  {
+  function(err, result){
     // Do something with result
   });
 
