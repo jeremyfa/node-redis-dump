@@ -1,0 +1,24 @@
+{
+    "name": "redis-dump",
+    "version": "0.1.0",
+    "description": "Redis dump library",
+    "author": "Jeremy Faivre <contact@jeremyfa.com>",
+    "main": "./bin/index.js",
+    "scripts": {
+        "test": "node ./bin/test.js"
+    },
+    "bin": {
+        "redis-dump": "./bin/cli/redis-dump"
+    },
+    "dependencies": {
+        "async": ">=0.1.15",
+        "optimist": ">=0.3.1"
+    },
+    "devDependencies": {
+        "coffee-script": ">=1.2.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/jeremyfa/redis-dump.git"
+    }
+}
