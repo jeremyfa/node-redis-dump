@@ -1,7 +1,14 @@
 {
     "name": "redis-dump",
-    "version": "0.1.2",
-    "description": "Dump redis database into redis cli commands",
+    "version": "0.1.3",
+    "description": "Dump redis database into redis commands or json with command line or node.js",
+    "keywords": [
+    "redis",
+    "dump",
+    "database",
+    "command line",
+    "json"
+    ],
     "author": "Jeremy Faivre <contact@jeremyfa.com>",
     "main": "./bin/index.js",
     "scripts": {
@@ -21,6 +28,6 @@
     },
     "repository": {
         "type": "git",
-        "url": "git://github.com/jeremyfa/redis-dump.git"
+        "url": "git://github.com/jeremyfa/node-redis-dump.git"
     }
 }

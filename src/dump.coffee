@@ -29,7 +29,7 @@ class RedisDumper
         else
             return "'"+"#{value}".split('\\').join('\\\\').split('\'').join('\\\'')+"'"
     
-    dump: ({filter, format, convert}, callback) ->
+    dump: ({filter, format, convert, pretty}, callback) ->
         keys = []
         types = []
         values = []
@@ -163,7 +163,10 @@ class RedisDumper
                                     json[key].ttl = ttl
                             # Return result
                             if format is 'json'
-                                callback null, JSON.stringify(json)
+                                if pretty
+                                    callback null, JSON.stringify(json, null, 4)
+                                else
+                                    callback null, JSON.stringify(json)
                             else
                                 callback null, json
                         

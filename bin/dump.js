@@ -43,9 +43,9 @@
     };
 
     RedisDumper.prototype.dump = function(_arg, callback) {
-      var convert, filter, format, keys, ttls, types, values,
+      var convert, filter, format, keys, pretty, ttls, types, values,
         _this = this;
-      filter = _arg.filter, format = _arg.format, convert = _arg.convert;
+      filter = _arg.filter, format = _arg.format, convert = _arg.convert, pretty = _arg.pretty;
       keys = [];
       types = [];
       values = [];
@@ -252,7 +252,11 @@
                   if (!isNaN(ttl) && ttl !== -1) json[key].ttl = ttl;
                 }
                 if (format === 'json') {
-                  return callback(null, JSON.stringify(json));
+                  if (pretty) {
+                    return callback(null, JSON.stringify(json, null, 4));
+                  } else {
+                    return callback(null, JSON.stringify(json));
+                  }
                 } else {
                   return callback(null, json);
                 }

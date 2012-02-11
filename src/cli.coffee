@@ -17,6 +17,7 @@ if argv.help
           --convert        Convert from json to redis commands
           --help           Output this help and exit
           --json           Output result as json
+          --pretty         Make pretty indented output (use with --json)
 
         Examples:
           redis-dump
@@ -37,6 +38,7 @@ else
         port:   argv.p ? 6379
         host:   argv.h ? '127.0.0.1'
         format: if argv.json then 'json' else 'redis'
+        pretty: argv.pretty ? false
 
     # Dump operation
     doDump = ->
