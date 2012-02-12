@@ -66,7 +66,7 @@ EXPIRE  mydb:volatile 3600
 If we call redis-dump, the output will look like this:
 
 ``` bash
-$ redis-dump 'mydb:*'
+$ redis-dump -f 'mydb:*'
 DEL     mydb:numberlist
 RPUSH   mydb:numberlist one two three
 DEL     mydb:numberset
@@ -84,10 +84,10 @@ EXPIRE  mydb:volatile 3600
 And with json output:
 
 ``` bash
-$ redis-dump 'mydb:*' --json
+$ redis-dump -f 'mydb:*' --json
 {"mydb:numberlist":{"type":"list","value":["one","two","three"]},"mydb:numberset":{"type":"set","value":["three","two","one"]},"mydb:sortednumberset":{"type":"zset","value":[[1000,"one"],[2000,"two"],[3000,"three"]]},"mydb:volatile":{"type":"string","value":"nothing important","ttl":3466},"mydb:article:4":{"type":"hash","value":{"title":"Hello World","id":"4"}},"mydb:numvisits":{"type":"string","value":"34"}}
   
-$ redis-dump 'mydb:*' --json --pretty > mydb.json
+$ redis-dump -f 'mydb:*' --json --pretty > mydb.json
 ```
 
 The json maps all the informations from redis database in a handy way for other programming languages.
