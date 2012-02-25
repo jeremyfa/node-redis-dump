@@ -83,6 +83,7 @@
               key = reply[_i];
               keys.push(key);
             }
+            keys = keys.sort();
             if (convert != null) {
               return next(null, (function() {
                 var _results;
@@ -225,7 +226,7 @@
                     case 'set':
                       json[key] = {
                         type: 'set',
-                        value: value
+                        value: value.sort()
                       };
                       break;
                     case 'zset':

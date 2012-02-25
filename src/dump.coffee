@@ -56,6 +56,8 @@ class RedisDumper
                 try
                     for key in reply
                         keys.push key
+                    # Sort keys in alphabetic order (better for versioning)
+                    keys = keys.sort();
 
                     if convert?
                         next null, (v.type for k, v of convert)
@@ -152,7 +154,7 @@ class RedisDumper
                                     when 'list'
                                         json[key] = type: 'list', value: value
                                     when 'set'
-                                        json[key] = type: 'set', value: value
+                                        json[key] = type: 'set', value: value.sort() # Sort set for better versioning
                                     when 'zset'
                                         json[key] = type: 'zset', value: ([parseInt(value[j+1],10), value[j]] for item, j in value by 2)
                                     when 'hash'
