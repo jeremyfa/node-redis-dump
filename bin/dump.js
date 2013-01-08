@@ -13,6 +13,7 @@
     if (params.filter == null) params.filter = '*';
     if (params.format == null) params.format = 'redis';
     if (params.convert == null) params.convert = null;
+    if (params.database == null) params.database = null;
     dumper = new RedisDumper(params);
     return dumper.dump(params, function() {
       var params;
@@ -25,9 +26,10 @@
   RedisDumper = (function() {
 
     function RedisDumper(_arg) {
-      var host, port;
-      port = _arg.port, host = _arg.host;
+      var database, host, port;
+      port = _arg.port, host = _arg.host, database = _arg.database;
       this.db = redis.createClient(port, host);
+      this.db.select(database);
     }
 
     RedisDumper.prototype.close = function() {
