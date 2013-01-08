@@ -32,6 +32,7 @@ $ redis-dump --help
 Usage: redis-dump [OPTIONS]
   -h <hostname>    Server hostname (default: 127.0.0.1)
   -p <port>        Server port (default: 6379)
+  -d <database>    Database to be selected (default: 0)
   -f <filter>      Query filter (default: *)
   --convert        Convert from json to redis commands
   --help           Output this help and exit
