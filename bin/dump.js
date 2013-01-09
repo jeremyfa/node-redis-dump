@@ -13,7 +13,7 @@
     if (params.filter == null) params.filter = '*';
     if (params.format == null) params.format = 'redis';
     if (params.convert == null) params.convert = null;
-    if (params.database == null) params.database = null;
+    if (params.database == null) params.database = 0;
     dumper = new RedisDumper(params);
     return dumper.dump(params, function() {
       var params;

@@ -8,7 +8,7 @@ module.exports = (params, callback) ->
     params.filter ?= '*'
     params.format ?= 'redis'
     params.convert ?= null
-    params.database ?= null
+    params.database ?= 0
 
     dumper = new RedisDumper(params)
     dumper.dump params, (params...) ->
