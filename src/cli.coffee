@@ -38,7 +38,7 @@ else
         filter:   argv.f ? '*'
         port:     argv.p ? 6379
         host:     argv.h ? '127.0.0.1'
-        database: argv.d ? null
+        database: argv.d ? 0
         format: if argv.json then 'json' else 'redis'
         pretty: argv.pretty ? false
 

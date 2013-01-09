@@ -18,7 +18,7 @@
       filter: (_ref = argv.f) != null ? _ref : '*',
       port: (_ref2 = argv.p) != null ? _ref2 : 6379,
       host: (_ref3 = argv.h) != null ? _ref3 : '127.0.0.1',
-      database: (_ref4 = argv.d) != null ? _ref4 : null,
+      database: (_ref4 = argv.d) != null ? _ref4 : 0,
       format: argv.json ? 'json' : 'redis',
       pretty: (_ref5 = argv.pretty) != null ? _ref5 : false
     };
