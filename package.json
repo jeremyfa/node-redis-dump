@@ -24,7 +24,8 @@
         "optimist": ">=0.3.1"
     },
     "devDependencies": {
-        "coffee-script": ">=1.2.0"
+        "coffee-script": ">=1.2.0",
+        "findit": "1"
     },
     "repository": {
         "type": "git",
