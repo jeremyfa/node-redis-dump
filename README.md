@@ -14,7 +14,7 @@ $ curl http://npmjs.org/install.sh | sh
 $ [sudo] npm install redis-dump -g
 ```
 
-**Note:** If you are using redis-dump _programatically_ you should not install it globally. 
+**Note:** If you are using redis-dump _programatically_ you should not install it globally.
 
 ``` bash
 $ cd /path/to/your/project
@@ -32,7 +32,7 @@ $ redis-dump --help
 Usage: redis-dump [OPTIONS]
   -h <hostname>    Server hostname (default: 127.0.0.1)
   -p <port>        Server port (default: 6379)
-  -d <database>    Database to be selected (default: 0)
+  -d <db>          Database to be selected (default: 0)
   -f <filter>      Query filter (default: *)
   --convert        Convert from json to redis commands
   --help           Output this help and exit
@@ -87,7 +87,7 @@ And with json output:
 ``` bash
 $ redis-dump -f 'mydb:*' --json
 {"mydb:numberlist":{"type":"list","value":["one","two","three"]},"mydb:numberset":{"type":"set","value":["three","two","one"]},"mydb:sortednumberset":{"type":"zset","value":[[1000,"one"],[2000,"two"],[3000,"three"]]},"mydb:volatile":{"type":"string","value":"nothing important","ttl":3466},"mydb:article:4":{"type":"hash","value":{"title":"Hello World","id":"4"}},"mydb:numvisits":{"type":"string","value":"34"}}
-  
+
 $ redis-dump -f 'mydb:*' --json --pretty > mydb.json
 ```
 
@@ -169,7 +169,7 @@ Then, import your data back to redis can be done in one line from either format:
 
 ``` bash
 $ cat mydb.json | redis-dump --convert | redis-cli # from json
-  
+
 $ cat dump.txt | redis-cli # from redis commands
 ```
 
@@ -190,7 +190,7 @@ function(err, result){
 });
 ```
 
-## License 
+## License
 
 (The MIT License)
 
