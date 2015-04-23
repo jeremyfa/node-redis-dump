@@ -3,16 +3,17 @@ fs      = require 'fs'
 path    = require 'path'
 argv    = require('optimist').argv
 dump    = require './dump'
-package = JSON.parse fs.readFileSync path.normalize(__dirname+'/../package.json'), 'utf8'
+pkg = JSON.parse fs.readFileSync path.normalize(__dirname+'/../package.json'), 'utf8'
 
 # Display help if requested
 if argv.help
     console.log """
-        #{package.name} #{package.version}
+        #{pkg.name} #{pkg.version}
 
         Usage: redis-dump [OPTIONS]
           -h <hostname>    Server hostname (default: 127.0.0.1)
           -p <port>        Server port (default: 6379)
+          -d <db>          Database number (default: 0)
           -f <filter>      Query filter (default: *)
           --convert        Convert from json to redis commands
           --help           Output this help and exit
@@ -35,6 +36,7 @@ if argv.help
 else
     params =
         filter: argv.f ? '*'
+        db:     argv.d ? 0
         port:   argv.p ? 6379
         host:   argv.h ? '127.0.0.1'
         format: if argv.json then 'json' else 'redis'

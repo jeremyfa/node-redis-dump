@@ -5,6 +5,7 @@ redis = require 'redis'
 module.exports = (params, callback) ->
     params.port ?= 6379
     params.host ?= '127.0.0.1'
+    params.db ?= '0'
     params.filter ?= '*'
     params.format ?= 'redis'
     params.convert ?= null
@@ -28,8 +29,8 @@ class RedisDumper
             return "#{value}"
         else
             return "'"+"#{value}".split('\\').join('\\\\').split('\'').join('\\\'')+"'"
-    
-    dump: ({filter, format, convert, pretty}, callback) ->
+
+    dump: ({db, filter, format, convert, pretty}, callback) ->
         keys = []
         types = []
         values = []
@@ -39,7 +40,7 @@ class RedisDumper
                 convert = JSON.parse convert
             catch e
                 return callback e
-        
+        @db.select db
         run [
             # Get keys matching filter
             (next) =>

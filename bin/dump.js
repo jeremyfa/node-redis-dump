@@ -8,11 +8,24 @@
 
   module.exports = function(params, callback) {
     var dumper;
-    if (params.port == null) params.port = 6379;
-    if (params.host == null) params.host = '127.0.0.1';
-    if (params.filter == null) params.filter = '*';
-    if (params.format == null) params.format = 'redis';
-    if (params.convert == null) params.convert = null;
+    if (params.port == null) {
+      params.port = 6379;
+    }
+    if (params.host == null) {
+      params.host = '127.0.0.1';
+    }
+    if (params.db == null) {
+      params.db = '0';
+    }
+    if (params.filter == null) {
+      params.filter = '*';
+    }
+    if (params.format == null) {
+      params.format = 'redis';
+    }
+    if (params.convert == null) {
+      params.convert = null;
+    }
     dumper = new RedisDumper(params);
     return dumper.dump(params, function() {
       var params;
@@ -43,9 +56,9 @@
     };
 
     RedisDumper.prototype.dump = function(_arg, callback) {
-      var convert, filter, format, keys, pretty, ttls, types, values,
+      var convert, filter, db, format, keys, pretty, ttls, types, values,
         _this = this;
-      filter = _arg.filter, format = _arg.format, convert = _arg.convert, pretty = _arg.pretty;
+      filter = _arg.filter, db = _arg.db, format = _arg.format, convert = _arg.convert, pretty = _arg.pretty;
       keys = [];
       types = [];
       values = [];
@@ -57,6 +70,7 @@
           return callback(e);
         }
       }
+      _this.db.select(db);
       return run([
         function(next) {
           var k;
