@@ -6,6 +6,7 @@ module.exports = (params, callback) ->
     params.port ?= 6379
     params.host ?= '127.0.0.1'
     params.db ?= '0'
+    params.auth ?= ''
     params.filter ?= '*'
     params.format ?= 'redis'
     params.convert ?= null
@@ -15,15 +16,16 @@ module.exports = (params, callback) ->
         callback params...
 
 class RedisDumper
-    
-    constructor: ({port, host}) ->
+
+    constructor: ({port, host, auth}) ->
+        console.log('hi', auth)
         # Connect to redis database
-        @db = redis.createClient(port, host)
-    
+        @db = redis.createClient(port, host, {auth_pass: auth})
+
     close: ->
         # Close redis connection
         @db.end()
-    
+
     escape: (value) ->
         if /^([a-zA-Z0-9_\:\-]+)$/.test "#{value}"
             return "#{value}"
@@ -51,7 +53,7 @@ class RedisDumper
                         @db.keys filter, next
                 catch e
                     next e
-            
+
             # For each key, get its type
             (reply, next) =>
                 try
@@ -69,7 +71,7 @@ class RedisDumper
                         multi.exec next
                 catch e
                     next e
-            
+
             # Get data of each key according to its type
             (replies, next) =>
                 try
@@ -112,14 +114,14 @@ class RedisDumper
                         multi.exec next
                 catch e
                     next e
-                    
-            
+
+
             # Get TTL of each key
             (replies, next) =>
                 try
                     for value in replies
                         values.push value
-                
+
                     if convert?
                         result = []
                         for key in keys
@@ -135,13 +137,13 @@ class RedisDumper
                         multi.exec next
                 catch e
                     next e
-            
+
             # Render result as the requested format
             (replies, next) =>
                 try
                     for ttl in replies
                         ttls.push ttl
-                
+
                     switch format
                         when 'json' or 'raw'
                             # Create json from key's type and data (default)
@@ -160,7 +162,7 @@ class RedisDumper
                                         json[key] = type: 'zset', value: ([parseInt(value[j+1],10), value[j]] for item, j in value by 2)
                                     when 'hash'
                                         json[key] = type: 'hash', value: value
-                    
+
                                 ttl = parseInt ttls[i], 10
                                 if not isNaN(ttl) and ttl isnt -1
                                     json[key].ttl = ttl
@@ -172,7 +174,7 @@ class RedisDumper
                                     callback null, JSON.stringify(json)
                             else
                                 callback null, json
-                        
+
                         else
                             # Create redis-cli compliant commands from key's type and data (default)
                             commands = []
@@ -199,7 +201,7 @@ class RedisDumper
                                         len++ for k of value
                                         if len isnt 0
                                             commands.push "HMSET   #{@escape key} #{((@escape(k)+' '+@escape(v)) for k, v of value).join(' ')}"
-                    
+
                                 ttl = parseInt ttls[i], 10
                                 if not isNaN(ttl) and ttl isnt -1
                                     commands.push "EXPIRE  #{@escape key} #{ttl}"

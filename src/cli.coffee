@@ -12,6 +12,7 @@ if argv.help
 
         Usage: redis-dump [OPTIONS]
           -h <hostname>    Server hostname (default: 127.0.0.1)
+          -a <auth>        Password (default: '')
           -p <port>        Server port (default: 6379)
           -d <db>          Database number (default: 0)
           -f <filter>      Query filter (default: *)
@@ -38,6 +39,7 @@ else
         filter: argv.f ? '*'
         db:     argv.d ? 0
         port:   argv.p ? 6379
+        auth:   argv.a ? ''
         host:   argv.h ? '127.0.0.1'
         format: if argv.json then 'json' else 'redis'
         pretty: argv.pretty ? false
@@ -49,7 +51,7 @@ else
             if result? and "#{result}".replace(/^\s+/, '').replace(/\s+$/, '') isnt ''
                 console.log result
                 process.exit 0
-    
+
     # If we are converting a stream from stdin, read it to the end
     if argv.convert
         params.convert = ''
@@ -61,5 +63,4 @@ else
     # Otherwise just run dump directly
     else
         doDump()
-    
-    
+
