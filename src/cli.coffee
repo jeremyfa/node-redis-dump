@@ -12,6 +12,7 @@ if argv.help
 
         Usage: redis-dump [OPTIONS]
           -h <hostname>    Server hostname (default: 127.0.0.1)
+          -a <auth>        Password (default: '')
           -p <port>        Server port (default: 6379)
           -d <db>          Database number (default: 0)
           -f <filter>      Query filter (default: *)
@@ -38,6 +39,7 @@ else
         filter: argv.f ? '*'
         db:     argv.d ? 0
         port:   argv.p ? 6379
+        auth:   argv.a ? ''
         host:   argv.h ? '127.0.0.1'
         format: if argv.json then 'json' else 'redis'
         pretty: argv.pretty ? false
