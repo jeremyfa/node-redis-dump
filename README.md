@@ -32,6 +32,7 @@ $ redis-dump --help
 Usage: redis-dump [OPTIONS]
   -h <hostname>    Server hostname (default: 127.0.0.1)
   -p <port>        Server port (default: 6379)
+  -a <auth>        Server auth password (default: '')
   -d <db>          Database to be selected (default: 0)
   -f <filter>      Query filter (default: *)
   --convert        Convert from json to redis commands
@@ -42,6 +43,7 @@ Usage: redis-dump [OPTIONS]
 Examples:
   redis-dump
   redis-dump -p 6500
+  redis-dump -p 6500 -a password
   redis-dump -f 'mydb:*' > mydb.dump.txt
   redis-dump --json > mydb.json
 

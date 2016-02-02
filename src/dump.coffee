@@ -15,11 +15,11 @@ module.exports = (params, callback) ->
         callback params...
 
 class RedisDumper
-    
-    constructor: ({port, host}) ->
+
+    constructor: ({port, host, auth}) ->
         # Connect to redis database
-        @db = redis.createClient(port, host)
-    
+        @db = redis.createClient(port, host, {auth_pass: auth})
+
     close: ->
         # Close redis connection
         @db.end()
