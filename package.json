@@ -18,10 +18,9 @@
     "redis-dump": "./bin/cli/redis-dump"
   },
   "dependencies": {
-    "hiredis": "^0.1.13",
-    "redis": "^0.7.1",
-    "async": "^0.1.15",
-    "optimist": "^0.3.1"
+    "async": "^1.5.2",
+    "optimist": "^0.3.7",
+    "redis": "^0.7.3"
   },
   "devDependencies": {
     "coffee-script": "^1.2.0",
