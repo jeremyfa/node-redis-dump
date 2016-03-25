@@ -1,34 +1,34 @@
 {
-    "name": "redis-dump",
-    "version": "0.1.7",
-    "description": "Dump redis database into redis commands or json with command line or node.js",
-    "keywords": [
+  "name": "redis-dump",
+  "version": "0.1.8",
+  "description": "Dump redis database into redis commands or json with command line or node.js",
+  "keywords": [
     "redis",
     "dump",
     "database",
     "command line",
     "json"
-    ],
-    "author": "Jeremy Faivre <contact@jeremyfa.com>",
-    "main": "./bin/index.js",
-    "scripts": {
-        "test": "node ./bin/test.js"
-    },
-    "bin": {
-        "redis-dump": "./bin/cli/redis-dump"
-    },
-    "dependencies": {
-        "hiredis": ">=0.1.13",
-        "redis": ">=0.7.1",
-        "async": ">=0.1.15",
-        "optimist": ">=0.3.1"
-    },
-    "devDependencies": {
-        "coffee-script": ">=1.2.0",
-        "findit": "1"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/jeremyfa/node-redis-dump.git"
-    }
+  ],
+  "author": "Jeremy Faivre <contact@jeremyfa.com>",
+  "main": "./bin/index.js",
+  "scripts": {
+    "test": "node ./bin/test.js"
+  },
+  "bin": {
+    "redis-dump": "./bin/cli/redis-dump"
+  },
+  "dependencies": {
+    "hiredis": "^0.1.13",
+    "redis": "^0.7.1",
+    "async": "^0.1.15",
+    "optimist": "^0.3.1"
+  },
+  "devDependencies": {
+    "coffee-script": "^1.2.0",
+    "glob": "^7.0.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jeremyfa/node-redis-dump.git"
+  }
 }

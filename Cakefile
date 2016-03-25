@@ -1,6 +1,6 @@
 
 fs = require 'fs'
-findit = require 'findit'
+glob = require 'glob'
 exec = require('child_process').exec
 coffee = require 'coffee-script'
 path = require 'path'
@@ -18,9 +18,9 @@ task 'build', 'build project', (options) ->
         # Copy src content into bin
         exec "cp -R #{escapeShell src} #{escapeShell bin}", (err, stdout, stderr) ->
             if err? then throw err
-            
+
             # Compile coffee files
-            for filename in findit.sync bin
+            for filename in glob.sync bin+'/*.coffee'
                 if filename.substring(filename.length-7) is '.coffee'
                     # Get script from coffee file
                     script = fs.readFileSync filename, 'utf8'
@@ -32,11 +32,10 @@ task 'build', 'build project', (options) ->
                     fs.closeSync file
                     # Delete coffee file
                     fs.unlinkSync filename
-            
+
             # Ensure redis-dump is executable
             exec "chmod +x #{escapeShell bin+'/cli/redis-dump'}", (err, stdout, stderr) ->
                 if err? then throw err
 
                 # Finish
                 console.log 'built redis-dump.'
-        
