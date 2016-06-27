@@ -60,6 +60,18 @@ class RedisDumper
                 try
                     for key in reply
                         keys.push key
+
+                    # If there are no keys, return now
+                    if keys.length is 0
+                        if format is 'json'
+                            callback null, '{}'
+                        else if format is 'raw'
+                            callback null, {}
+                        else
+                            callback null, ''
+                        next null, null
+                        return
+
                     # Sort keys in alphabetic order (better for versioning)
                     keys = keys.sort();
 
@@ -76,6 +88,10 @@ class RedisDumper
             # Get data of each key according to its type
             (replies, next) =>
                 try
+                    if keys.length is 0
+                        next null, null
+                        return
+
                     for type in replies
                         types.push type
 
@@ -120,6 +136,10 @@ class RedisDumper
             # Get TTL of each key
             (replies, next) =>
                 try
+                    if keys.length is 0
+                        next null, null
+                        return
+
                     for value in replies
                         values.push value
 
@@ -142,6 +162,10 @@ class RedisDumper
             # Render result as the requested format
             (replies, next) =>
                 try
+                    if keys.length is 0
+                        next null, null
+                        return
+
                     for ttl in replies
                         ttls.push ttl
 

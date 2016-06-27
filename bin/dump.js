@@ -106,6 +106,17 @@
                 key = reply[l];
                 keys.push(key);
               }
+              if (keys.length === 0) {
+                if (format === 'json') {
+                  callback(null, '{}');
+                } else if (format === 'raw') {
+                  callback(null, {});
+                } else {
+                  callback(null, '');
+                }
+                next(null, null);
+                return;
+              }
               keys = keys.sort();
               if (convert != null) {
                 return next(null, (function() {
@@ -134,6 +145,10 @@
           return function(replies, next) {
             var entry, error1, i, l, len1, len2, len3, len4, m, multi, n, o, ref, result, type, val;
             try {
+              if (keys.length === 0) {
+                next(null, null);
+                return;
+              }
               for (l = 0, len1 = replies.length; l < len1; l++) {
                 type = replies[l];
                 types.push(type);
@@ -199,6 +214,10 @@
           return function(replies, next) {
             var error1, key, l, len1, len2, len3, m, multi, n, result, value;
             try {
+              if (keys.length === 0) {
+                next(null, null);
+                return;
+              }
               for (l = 0, len1 = replies.length; l < len1; l++) {
                 value = replies[l];
                 values.push(value);
@@ -231,6 +250,10 @@
           return function(replies, next) {
             var commands, error1, i, item, j, json, k, key, l, len, len1, len2, len3, m, n, ttl, type, v, value;
             try {
+              if (keys.length === 0) {
+                next(null, null);
+                return;
+              }
               for (l = 0, len1 = replies.length; l < len1; l++) {
                 ttl = replies[l];
                 ttls.push(ttl);

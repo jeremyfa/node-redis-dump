@@ -50,7 +50,7 @@ else
             if err? then return process.stderr.write "#{err.message ? err}\n"
             if result? and "#{result}".replace(/^\s+/, '').replace(/\s+$/, '') isnt ''
                 console.log result
-                process.exit 0
+            process.exit 0
 
     # If we are converting a stream from stdin, read it to the end
     if argv.convert

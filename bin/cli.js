@@ -31,8 +31,8 @@
         }
         if ((result != null) && ("" + result).replace(/^\s+/, '').replace(/\s+$/, '') !== '') {
           console.log(result);
-          return process.exit(0);
         }
+        return process.exit(0);
       });
     };
     if (argv.convert) {
