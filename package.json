@@ -1,6 +1,6 @@
 {
   "name": "redis-dump",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "Dump redis database into redis commands or json with command line or node.js",
   "keywords": [
     "redis",
