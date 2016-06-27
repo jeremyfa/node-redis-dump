@@ -20,7 +20,7 @@
   "dependencies": {
     "async": "^1.5.2",
     "optimist": "^0.3.7",
-    "redis": "^0.7.3"
+    "redis": "^2.6.2"
   },
   "devDependencies": {
     "coffee-script": "^1.2.0",
