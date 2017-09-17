@@ -25,7 +25,7 @@ class RedisDumper
 
     close: ->
         # Close redis connection
-        @db.end()
+        @db.end(true)
 
     escape: (value) ->
         if /^([a-zA-Z0-9_\:\-]+)$/.test "#{value}"
