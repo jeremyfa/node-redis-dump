@@ -31,7 +31,7 @@ class RedisDumper
         if /^([a-zA-Z0-9_\:\-]+)$/.test "#{value}"
             return "#{value}"
         else
-            return "'"+"#{value}".split('\\').join('\\\\').split('\'').join('\\\'')+"'"
+            return "'"+"#{value}".split('\\').join('\\\\').split('\'').join('\\\'').split('\\"').join('\"')+"'"
 
     dump: ({db, filter, format, convert, pretty}, callback) ->
         keys = []
