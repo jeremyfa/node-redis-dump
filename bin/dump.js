@@ -305,7 +305,7 @@
                         };
                     }
                     ttl = parseInt(ttls[i], 10);
-                    if (!isNaN(ttl) && ttl !== -1) {
+                    if (!isNaN(ttl) && ttl !== -1 && json[key]) {
                       json[key].ttl = ttl;
                     }
                   }
