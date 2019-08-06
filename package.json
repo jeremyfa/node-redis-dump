@@ -18,13 +18,13 @@
     "redis-dump": "./bin/cli/redis-dump"
   },
   "dependencies": {
-    "async": "^1.5.2",
-    "optimist": "^0.3.7",
-    "redis": "^2.6.2"
+    "async": "^3.1.0",
+    "optimist": "^0.6.1",
+    "redis": "^2.8.0"
   },
   "devDependencies": {
-    "coffee-script": "^1.2.0",
-    "glob": "^7.0.3"
+    "coffeescript": "^2.4.1",
+    "glob": "^7.1.4"
   },
   "repository": {
     "type": "git",
