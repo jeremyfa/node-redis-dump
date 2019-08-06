@@ -11,8 +11,9 @@
 
   pkg = JSON.parse(fs.readFileSync(path.normalize(__dirname + '/../package.json'), 'utf8'));
 
+  // Display help if requested
   if (argv.help) {
-    console.log(pkg.name + " " + pkg.version + "\n\nUsage: redis-dump [OPTIONS]\n  -h <hostname>    Server hostname (default: 127.0.0.1)\n  -p <port>        Server port (default: 6379)\n  -d <db>          Database number (default: 0)\n  -a <auth>        Password\n  -f <filter>      Query filter (default: *)\n  --convert        Convert from json to redis commands\n  --help           Output this help and exit\n  --json           Output result as json\n  --pretty         Make pretty indented output (use with --json)\n\nExamples:\n  redis-dump\n  redis-dump -p 6500\n  redis-dump -f 'mydb:*' > mydb.dump.txt\n  redis-dump --json > mydb.json\n  cat mydb.json | redis-dump --convert\n\nThe output is a valid list of redis commands.\nThat means the following will work:\n  redis-dump > dump.txt      # Dump redis database\n  cat dump.txt | redis-cli   # Import redis database from generated file\n");
+    console.log(`${pkg.name} ${pkg.version}\n\nUsage: redis-dump [OPTIONS]\n  -h <hostname>    Server hostname (default: 127.0.0.1)\n  -p <port>        Server port (default: 6379)\n  -d <db>          Database number (default: 0)\n  -a <auth>        Password\n  -f <filter>      Query filter (default: *)\n  --convert        Convert from json to redis commands\n  --help           Output this help and exit\n  --json           Output result as json\n  --pretty         Make pretty indented output (use with --json)\n\nExamples:\n  redis-dump\n  redis-dump -p 6500\n  redis-dump -f 'mydb:*' > mydb.dump.txt\n  redis-dump --json > mydb.json\n  cat mydb.json | redis-dump --convert\n\nThe output is a valid list of redis commands.\nThat means the following will work:\n  redis-dump > dump.txt      # Dump redis database\n  cat dump.txt | redis-cli   # Import redis database from generated file\n`);
   } else {
     params = {
       filter: (ref = argv.f) != null ? ref : '*',
@@ -23,28 +24,31 @@
       format: argv.json ? 'json' : 'redis',
       pretty: (ref5 = argv.pretty) != null ? ref5 : false
     };
+    // Dump operation
     doDump = function() {
       return dump(params, function(err, result) {
         var ref6;
         if (err != null) {
-          return process.stderr.write(((ref6 = err.message) != null ? ref6 : err) + "\n");
+          return process.stderr.write(`${(ref6 = err.message) != null ? ref6 : err}\n`);
         }
-        if ((result != null) && ("" + result).replace(/^\s+/, '').replace(/\s+$/, '') !== '') {
+        if ((result != null) && `${result}`.replace(/^\s+/, '').replace(/\s+$/, '') !== '') {
           console.log(result);
         }
         return process.exit(0);
       });
     };
+    // If we are converting a stream from stdin, read it to the end
     if (argv.convert) {
       params.convert = '';
       process.stdin.resume();
       process.stdin.on('data', function(chunk) {
-        return params.convert += "" + chunk;
+        return params.convert += `${chunk}`;
       });
       process.stdin.on('end', function() {
         return doDump();
       });
     } else {
+      // Otherwise just run dump directly
       doDump();
     }
   }

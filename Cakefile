@@ -2,7 +2,7 @@
 fs = require 'fs'
 glob = require 'glob'
 exec = require('child_process').exec
-coffee = require 'coffee-script'
+coffee = require 'coffeescript'
 path = require 'path'
 
 escapeShell = (arg) -> "'" + arg.replace(/[^\\]'/g, (m, i, s) -> m.slice(0, 1) + "\\'") + "'"
