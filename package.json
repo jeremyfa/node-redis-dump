@@ -1,7 +1,7 @@
 {
-  "name": "redis-dump",
-  "version": "0.1.10",
-  "description": "Dump redis database into redis commands or json with command line or node.js",
+  "name": "redis-dumpz",
+  "version": "0.1.11",
+  "description": "Picked up the redis-dump package that seems abandoned, to at least give it security patches. This package dumps redis database into redis commands or json with command line or node.js",
   "keywords": [
     "redis",
     "dump",
@@ -9,7 +9,14 @@
     "command line",
     "json"
   ],
-  "author": "Jeremy Faivre <contact@jeremyfa.com>",
+  "author": "Nicolas Zelaya <zelayadn@gmail.com>",
+  "contributors": [
+    {
+      "name": "Jeremy Faivre",
+      "email": "contact@jeremyfa.com",
+      "url": "https://github.com/jeremyfa"
+    }
+  ],
   "main": "./bin/index.js",
   "scripts": {
     "test": "node ./bin/test.js"
@@ -20,7 +27,7 @@
   "dependencies": {
     "async": "^1.5.2",
     "optimist": "^0.3.7",
-    "redis": "^2.6.2"
+    "redis": "^3.1.1"
   },
   "devDependencies": {
     "coffee-script": "^1.2.0",
