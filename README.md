@@ -1,4 +1,6 @@
-# redis-dump
+# redis-dumpz
+
+**I'm not the original author of this code.** This is just a fork from the original redis-dump package that had no activity in the past years (at the time this repo is created) so no credits to me, but for it's original author. 
 
 Dump redis database into redis commands or json with command line or node.js
 
