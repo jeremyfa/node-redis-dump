@@ -10,7 +10,7 @@ if argv.help
     console.log """
         #{pkg.name} #{pkg.version}
 
-        Usage: redis-dump [OPTIONS]
+        Usage: redis-dumpz [OPTIONS]
           -h <hostname>    Server hostname (default: 127.0.0.1)
           -p <port>        Server port (default: 6379)
           -d <db>          Database number (default: 0)
@@ -22,15 +22,15 @@ if argv.help
           --pretty         Make pretty indented output (use with --json)
 
         Examples:
-          redis-dump
-          redis-dump -p 6500
-          redis-dump -f 'mydb:*' > mydb.dump.txt
-          redis-dump --json > mydb.json
-          cat mydb.json | redis-dump --convert
+          redis-dumpz
+          redis-dumpz -p 6500
+          redis-dumpz -f 'mydb:*' > mydb.dump.txt
+          redis-dumpz --json > mydb.json
+          cat mydb.json | redis-dumpz --convert
 
         The output is a valid list of redis commands.
         That means the following will work:
-          redis-dump > dump.txt      # Dump redis database
+          redis-dumpz > dump.txt      # Dump redis database
           cat dump.txt | redis-cli   # Import redis database from generated file
 
         """
