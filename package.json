@@ -35,6 +35,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/jeremyfa/node-redis-dump.git"
+    "url": "git://github.com/NicoZelaya/node-redis-dump.git"
   }
 }
