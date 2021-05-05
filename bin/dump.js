@@ -49,7 +49,7 @@
     }
 
     RedisDumper.prototype.close = function() {
-      return this.db.end();
+      return this.db.end(true);
     };
 
     RedisDumper.prototype.escape = function(value) {
@@ -61,7 +61,7 @@
     };
 
     RedisDumper.prototype.dump = function(arg, callback) {
-      var convert, db, e, error, filter, format, keys, pretty, ttls, types, values;
+      var convert, db, e, filter, format, keys, pretty, ttls, types, values;
       db = arg.db, filter = arg.filter, format = arg.format, convert = arg.convert, pretty = arg.pretty;
       keys = [];
       types = [];
@@ -79,7 +79,7 @@
       return run([
         (function(_this) {
           return function(next) {
-            var error1, k;
+            var k;
             try {
               if (convert != null) {
                 return next(null, (function() {
@@ -93,14 +93,14 @@
               } else {
                 return _this.db.keys(filter, next);
               }
-            } catch (error1) {
-              e = error1;
+            } catch (error) {
+              e = error;
               return next(e);
             }
           };
         })(this), (function(_this) {
           return function(reply, next) {
-            var error1, k, key, l, len1, len2, m, multi, v;
+            var k, key, l, len1, len2, m, multi, v;
             try {
               for (l = 0, len1 = reply.length; l < len1; l++) {
                 key = reply[l];
@@ -136,14 +136,14 @@
                 }
                 return multi.exec(next);
               }
-            } catch (error1) {
-              e = error1;
+            } catch (error) {
+              e = error;
               return next(e);
             }
           };
         })(this), (function(_this) {
           return function(replies, next) {
-            var entry, error1, i, l, len1, len2, len3, len4, m, multi, n, o, ref, result, type, val;
+            var entry, i, l, len1, len2, len3, len4, m, multi, n, o, ref, result, type, val;
             try {
               if (keys.length === 0) {
                 next(null, null);
@@ -205,14 +205,14 @@
                 }
                 return multi.exec(next);
               }
-            } catch (error1) {
-              e = error1;
+            } catch (error) {
+              e = error;
               return next(e);
             }
           };
         })(this), (function(_this) {
           return function(replies, next) {
-            var error1, key, l, len1, len2, len3, m, multi, n, result, value;
+            var key, l, len1, len2, len3, m, multi, n, result, value;
             try {
               if (keys.length === 0) {
                 next(null, null);
@@ -241,14 +241,14 @@
                 }
                 return multi.exec(next);
               }
-            } catch (error1) {
-              e = error1;
+            } catch (error) {
+              e = error;
               return next(e);
             }
           };
         })(this), (function(_this) {
           return function(replies, next) {
-            var commands, error1, i, item, j, json, k, key, l, len, len1, len2, len3, m, n, ttl, type, v, value;
+            var commands, i, item, j, json, k, key, l, len, len1, len2, len3, m, n, ttl, type, v, value;
             try {
               if (keys.length === 0) {
                 next(null, null);
@@ -394,8 +394,8 @@
                   }
                   return callback(null, commands.join("\n"));
               }
-            } catch (error1) {
-              e = error1;
+            } catch (error) {
+              e = error;
               return next(e);
             }
           };
